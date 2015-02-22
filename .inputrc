@@ -1,0 +1,39 @@
+set bell-style none
+set output-meta on
+set completion-ignore-case on
+set convert-meta off
+set visible-stats on
+set show-all-if-ambiguous on
+set input-meta on
+
+
+$if Bash
+   Space: magic-space
+$endif
+
+"\M-w": copy-region-as-kill
+"\M-o": "\C-p\C-a\M-f "
+"\M-v": previous-history
+"\M-s": menu-complete
+"\M-p": history-search-backward
+"\M-n": history-search-forward
+"\C-x\C-r": re-read-init-file
+
+
+"\e[zf": "\n"
+"\e[zg": "+"
+"\e[zh": "-"
+"\e[zi": "."
+"\e[zj": "/"
+"\e[zk": "*"
+"\e[zl": "0"
+"\e[zm": "1"
+"\e[zn": "2"
+"\e[zo": "3"
+"\e[zp": "4"
+"\e[zq": "5"
+"\e[zr": "6"
+"\e[zs": "7"
+"\e[zt": "8"
+"\e[zu": "9"
+

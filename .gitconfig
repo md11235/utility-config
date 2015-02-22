@@ -1,0 +1,40 @@
+[alias]
+	st = status --short
+	ci = commit
+	br = branch
+	co = checkout
+  df = diff
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	dfb = diff -b
+	dfc = diff --cached
+	log = log --decorate --graph
+[user]
+	name = username
+	email = username@example.com
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow 
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan        
+[core]
+	whitespace = cr-at-eol
+	autocrlf = input
+	safecrlf = false
+	trustctime = false
+	fileMode = false
+	pager = less -x4
+[push]
+	default = simple

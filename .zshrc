@@ -6,7 +6,8 @@ export HISTSIZE=50000
 export SAVEHIST=50000
 eval `dircolors -b`
 
-autoload -U compinit compinit
+autoload -U compinit
+compinit
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt autocd
 setopt cdablevars
@@ -17,12 +18,14 @@ setopt login
 setopt noclobber
 setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
+setopt inc_append_history # Add comamnds as they are typed, don't wait until shell exit
 setopt HIST_IGNORE_ALL_DUPS
 setopt SH_WORD_SPLIT
 setopt nohup
 setopt append_history
 setopt share_history
 setopt PROMPT_SUBST
+setopt extendedglob
 
 # PS1 and PS2
 #export PS1="$(print '%{\e[1;34m%}%n%{\e[0m%}'):$(print '%{\e[0;34m%}%~%{\e[0m%}')$ "
@@ -216,8 +219,6 @@ esac
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
 export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
 #export PROMPT=$'\n\e[$((31 + $(hostname | cksum | cut -c7-9) % 6));1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
-
-setopt extendedglob
 
 export ZLS_COLORS=${LS_COLORS}
 export ZLS_COLOURS=${LS_COLORS}

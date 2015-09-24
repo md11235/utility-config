@@ -1,4 +1,8 @@
 ###########################################################        
+if [ "$OSTYPE" = "cygwin" ]; then
+   export ZHANG_HOME=/d/zhang
+fi
+
 # Options for Zsh
 
 export HISTFILE=~/.zsh_history
@@ -55,7 +59,11 @@ zstyle ':completion:*:kill:*' force-list always
 # cd not select parent dir
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-#zstyle ':completion:*' fake-files /:c /:d /:e /:h /:m /:p 
+if [ "$OSTYPE" = "cygwin" ]; then
+    # zstyle ':completion:*' fake-files /:c /:d /:h /:j /:p 
+    # zstyle ':completion:*' fake-files $(df --output=source | tr -d ':' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+    zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+fi
 
 ## case-insensitive (uppercase from lowercase) completion
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -156,7 +164,7 @@ alias hist="grep '$1' /home/paul/.zsh_history"
 alias irssi="irssi -c irc.freenode.net -n yyz"
 alias mem="free -m"
 alias msn="tmsnc -l hutchy@subdimension.com"
-
+alias google="w3m www.google.com"
 
 # command L equivalent to command |less
 alias -g L='|less' 
@@ -217,6 +225,7 @@ esac
 #export PROMPT=$'[%D %*]%n@%M:%d \n$'
 #export PROMPT=$'\e[32;1m[%D %*]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
+#export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
 export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
 #export PROMPT=$'\n\e[$((31 + $(hostname | cksum | cut -c7-9) % 6));1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
 
@@ -226,8 +235,6 @@ export WORDCHARS="*?_-[]~&;!#$%^(){}<>"
 
 bindkey -e
 export EDITOR=vim
-export PATH=$PATH:/usr/local/bin:/usr/local/sbin
-export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 
 #### functions
 
@@ -241,7 +248,8 @@ function e () {
             /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $* --alternate-editor "/Users/$(whoami)/bin/emacs-osx"
             ;;
         cygwin)
-            emacsclient --no-wait "$(cygpath -a -w $*)"
+            emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/emacs/bin/runemacs.exe)"
+            #emacsclient --no-wait "$(cygpath -a -w $*)"
             ;;
     esac
 
@@ -258,7 +266,7 @@ function e () {
 
 function e2 () {
     local TMP;
-    if [[ "$1" == "-" ]]; then
+    if [[ ("$1" == "-") || ($# -eq 0) ]]; then
         TMP="$(mktemp /tmp/emacsstdinXXX)";
 
         if [ "$OSTYPE" = "cygwin" ]; then
@@ -273,13 +281,17 @@ function e2 () {
         if [ "$OSTYPE" = "cygwin" ]; then
             emacsclient --alternate-editor "vim" --no-wait "$(cygpath -a -w $*)"
         else
-            emacsclient --no-wait $*
+            emacsclient --alternate-editor "vim" --no-wait $*
         fi
     fi;
 }
 
 function svndiff () {
     svn diff $* | view -
+}
+
+function iciba () {
+    w3m "http://www.iciba.com/search?s=$1"
 }
 
 # e () {
@@ -307,6 +319,13 @@ precmd () {
 stty -ixon
 
 #export LDFLAGS=" -static -static-libgcc  -static-libstdc++"
+#export JAVA_HOME="c:\\Program Files\\Java\\jdk1.6.0_07\\"
+#export JAVA_HOME=/c/Program\ Files\ \(x86\)/Java/jre6/
+export JAVA_HOME="d:/Program Files/Java/jdk1.8.0_31"
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+export MAVEN_OPTS="-Xmx1024m -Xms512m"
+
+
 case $OSTYPE in
     linux)
         ;;
@@ -350,15 +369,62 @@ export MAVEN_OPTS="-Xms1024m -Xmx1024m"
 
 export LC_ALL=en_US.UTF-8
 
+zle-isearch-exit() {
+    if [[ $ISEARCHDIR -eq 1 ]]; then
+        local match mbegin mend
+        setopt extendedglob
+        [[ -n $LASTSEARCH ]] || return 0
+        : ${LBUFFER%(#bi)(*)$LASTSEARCH}
+        CURSOR=$mend[1]
+    fi
+
+    return 0
+}
+zle -N zle-isearch-exit
 
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 
-export PATH="/tmp/narwhal/bin:$PATH"
+function mds-git-up-dirs () {
+    typeset -a failed_projects;
 
-export CAPP_BUILD="/tmp/Build"
+    for dir in $(ls --color=none); do
+        if [[ -d $dir ]]; then
+            cd $dir;
+            echo "git pull $dir";
+            git pull;
+            if [[ $? -ne 0 ]]; then
+                set -A failed_projects $dir;
+            fi
+            cd -;
+        fi
+    done
+
+    echo "----------------------------------";
+    echo "failed projects:"
+    for fdir in $failed_projects; do
+        echo $fdir;
+    done
+}
+
+function mds-git-st-dirs () {
+    for dir in $(ls --color=none); do
+        if [[ -d $dir ]]; then
+            cd $dir;
+            echo "*DIR: cd $dir";
+            git status --short;
+            cd -;
+        fi
+    done
+}
+
+# export PATH=$PATH:/usr/local/bin:/usr/local/sbin
+# export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
+# export PATH="/usr/local/bin:/usr/bin:/bin::"
+if [ "$OSTYPE" = "cygwin" ]; then
+   export PATH="$PATH:$ZHANG_HOME/Applications/emacs/bin:~/bin:/c/WINDOWS/system32"
+fi
 
 export PATH="/home/$(whoami)/narwhal/bin:$PATH"
-
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

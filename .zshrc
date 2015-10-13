@@ -59,11 +59,15 @@ zstyle ':completion:*:kill:*' force-list always
 # cd not select parent dir
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-if [ "$OSTYPE" = "cygwin" ]; then
-    # zstyle ':completion:*' fake-files /:c /:d /:h /:j /:p 
-    # zstyle ':completion:*' fake-files $(df --output=source | tr -d ':' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
-    zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
-fi
+case `uname` in
+    *MINGW*|*CYGWIN*) zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+esac
+
+#if [ "$OSTYPE" = "cygwin" ]; then
+#    # zstyle ':completion:*' fake-files /:c /:d /:h /:j /:p 
+#    # zstyle ':completion:*' fake-files $(df --output=source | tr -d ':' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+#    zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+#fi
 
 ## case-insensitive (uppercase from lowercase) completion
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'

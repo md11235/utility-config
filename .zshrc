@@ -214,7 +214,8 @@ fi
 
 case $OSTYPE in
    cygwin)
-      alias open="cmd /c start";
+      alias open="cygstart";
+      #alias open="cmd /c start";
 	  ;;
    linux*)
       alias start="xdg-open";

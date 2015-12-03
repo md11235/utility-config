@@ -214,7 +214,8 @@ fi
 
 case $OSTYPE in
    cygwin)
-      alias open="cmd /c start";
+      alias open="cygstart";
+      #alias open="cmd /c start";
 	  ;;
    linux*)
       alias start="xdg-open";
@@ -252,7 +253,7 @@ function e () {
             /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $* --alternate-editor "/Users/$(whoami)/bin/emacs-osx"
             ;;
         cygwin)
-            emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/emacs/bin/runemacs.exe)"
+            emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/BTSync/Applications/Windows/emacs/bin/runemacs.exe)"
             #emacsclient --no-wait "$(cygpath -a -w $*)"
             ;;
     esac

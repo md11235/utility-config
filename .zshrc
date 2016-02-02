@@ -326,7 +326,7 @@ stty -ixon
 #export LDFLAGS=" -static -static-libgcc  -static-libstdc++"
 #export JAVA_HOME="c:\\Program Files\\Java\\jdk1.6.0_07\\"
 #export JAVA_HOME=/c/Program\ Files\ \(x86\)/Java/jre6/
-export JAVA_HOME="d:/Program Files/Java/jdk1.8.0_31"
+#export JAVA_HOME="d:/Program Files/Java/jdk1.8.0_31"
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 export MAVEN_OPTS="-Xmx1024m -Xms512m"
 

@@ -59,11 +59,15 @@ zstyle ':completion:*:kill:*' force-list always
 # cd not select parent dir
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-if [ "$OSTYPE" = "cygwin" ]; then
-    # zstyle ':completion:*' fake-files /:c /:d /:h /:j /:p 
-    # zstyle ':completion:*' fake-files $(df --output=source | tr -d ':' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
-    zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
-fi
+case `uname` in
+    *MINGW*|*CYGWIN*) zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+esac
+
+#if [ "$OSTYPE" = "cygwin" ]; then
+#    # zstyle ':completion:*' fake-files /:c /:d /:h /:j /:p 
+#    # zstyle ':completion:*' fake-files $(df --output=source | tr -d ':' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+#    zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+#fi
 
 ## case-insensitive (uppercase from lowercase) completion
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -210,7 +214,8 @@ fi
 
 case $OSTYPE in
    cygwin)
-      alias open="cmd /c start";
+      alias open="cygstart";
+      #alias open="cmd /c start";
 	  ;;
    linux*)
       alias start="xdg-open";
@@ -226,7 +231,8 @@ esac
 #export PROMPT=$'\e[32;1m[%D %*]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
-export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
+source ~/utility-config/zsh-git-prompt/zshrc.sh
+export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m$(git_super_status)\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
 #export PROMPT=$'\n\e[$((31 + $(hostname | cksum | cut -c7-9) % 6));1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
 
 export ZLS_COLORS=${LS_COLORS}
@@ -248,7 +254,7 @@ function e () {
             /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $* --alternate-editor "/Users/$(whoami)/bin/emacs-osx"
             ;;
         cygwin)
-            emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/emacs/bin/runemacs.exe)"
+            emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/BTSync/Applications/Windows/emacs/bin/runemacs.exe)"
             #emacsclient --no-wait "$(cygpath -a -w $*)"
             ;;
     esac
@@ -321,7 +327,7 @@ stty -ixon
 #export LDFLAGS=" -static -static-libgcc  -static-libstdc++"
 #export JAVA_HOME="c:\\Program Files\\Java\\jdk1.6.0_07\\"
 #export JAVA_HOME=/c/Program\ Files\ \(x86\)/Java/jre6/
-export JAVA_HOME="d:/Program Files/Java/jdk1.8.0_31"
+#export JAVA_HOME="d:/Program Files/Java/jdk1.8.0_31"
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 export MAVEN_OPTS="-Xmx1024m -Xms512m"
 
@@ -423,8 +429,10 @@ function mds-git-st-dirs () {
 # export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 # export PATH="/usr/local/bin:/usr/bin:/bin::"
 if [ "$OSTYPE" = "cygwin" ]; then
-   export PATH="$PATH:$ZHANG_HOME/Applications/emacs/bin:~/bin:/c/WINDOWS/system32"
+   export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32"
 fi
 
 export PATH="/home/$(whoami)/narwhal/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+

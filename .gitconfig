@@ -9,8 +9,8 @@
 	dfc = diff --cached
 	log = log --decorate --graph
 [user]
-	name = username
-	email = username@example.com
+	name = Madsen
+	email = sen.zhang@qq.com
 
 [color]
   branch = auto

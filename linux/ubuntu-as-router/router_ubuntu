@@ -1,0 +1,2 @@
+sudo iptables -t nat -A POSTROUTING -o em2 -j MASQUERADE
+sudo iptables -A FORWARD -i em1 -o em2 -j ACCEPT

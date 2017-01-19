@@ -1,3 +1,6 @@
 [submodule "emacs-config"]
 	path = emacs-config
 	url = https://github.com/md11235/emacs-config/
+[submodule "zsh-git-prompt"]
+	path = zsh-git-prompt
+	url = https://github.com/olivierverdier/zsh-git-prompt

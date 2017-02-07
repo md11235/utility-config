@@ -203,6 +203,7 @@ alias ..="cd .."
 alias ,="cd .."
 alias less2=/usr/bin/less
 alias oie="xargs -n 1 emacsclient --no-wait"
+alias rsync="rsync --progress"
 
 
 # cygwin specific part
@@ -231,8 +232,9 @@ esac
 #export PROMPT=$'\e[32;1m[%D %*]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
-source /d/zhang/BTSync/config/zsh/zsh-git-prompt/zshrc.sh
-export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m$(git_super_status)\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
+# source /d/zhang/BTSync/config/zsh/zsh-git-prompt/zshrc.sh
+# $(git_super_status)
+export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
 #export PROMPT=$'\n\e[$((31 + $(hostname | cksum | cut -c7-9) % 6));1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
 
 export ZLS_COLORS=${LS_COLORS}

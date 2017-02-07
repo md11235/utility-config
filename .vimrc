@@ -23,9 +23,9 @@ set ruler
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set autoindent
 set smartindent
-set cindent
+" set cindent
+set autoindent
 
 " Intuitive backspacing in insert mode
 set backspace=indent,eol,start

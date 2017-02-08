@@ -1,3 +1,4 @@
+#zmodload zsh/zprof 
 ###########################################################        
 if [ "$OSTYPE" = "cygwin" ]; then
    export ZHANG_HOME=/d/zhang
@@ -10,8 +11,8 @@ export HISTSIZE=50000
 export SAVEHIST=50000
 eval `dircolors -b`
 
-autoload -U compinit
-compinit
+#autoload -U compinit
+#compinit
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt autocd
 setopt cdablevars
@@ -437,4 +438,4 @@ fi
 export PATH="/home/$(whoami)/narwhal/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-
+#zprof

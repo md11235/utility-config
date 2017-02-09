@@ -221,6 +221,9 @@ case $OSTYPE in
       alias start="xdg-open";
       alias open="xdg-open";
 	  ;;
+   msys)
+      alias open="start";
+      ;;
    darwin*)
       alias start="open";
 	  ;;

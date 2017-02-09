@@ -1,3 +1,4 @@
+#zmodload zsh/zprof 
 ###########################################################        
 if [ "$OSTYPE" = "cygwin" ]; then
    export ZHANG_HOME=/d/zhang
@@ -10,8 +11,8 @@ export HISTSIZE=50000
 export SAVEHIST=50000
 eval `dircolors -b`
 
-autoload -U compinit
-compinit
+#autoload -U compinit
+#compinit
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt autocd
 setopt cdablevars
@@ -203,6 +204,7 @@ alias ..="cd .."
 alias ,="cd .."
 alias less2=/usr/bin/less
 alias oie="xargs -n 1 emacsclient --no-wait"
+alias rsync="rsync --progress"
 
 
 # cygwin specific part
@@ -235,6 +237,8 @@ esac
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}]%n@%M:\e[0m\e[33;1m%~ \e[0m\n$'
 #export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
 export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
+# source ~/utility-config/zsh-git-prompt/zshrc.sh
+# export PROMPT=$'\n\e[32;1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m$(git_super_status)\n%{%(?.%F{green}.%F{red})%}$%{%f%}'
 #export PROMPT=$'\n\e[$((31 + $(hostname | cksum | cut -c7-9) % 6));1m[%D{%a %Y-%m-%d %H:%M:%S}][%n@%M]:\e[0m\e[33;1m%~ \e[0m\n$'
 
 export ZLS_COLORS=${LS_COLORS}
@@ -431,8 +435,10 @@ function mds-git-st-dirs () {
 # export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 # export PATH="/usr/local/bin:/usr/bin:/bin::"
 if [ "$OSTYPE" = "cygwin" ]; then
-   export PATH="$PATH:$ZHANG_HOME/Applications/emacs/bin:~/bin:/c/WINDOWS/system32"
+   export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32"
 fi
 
 export PATH="/home/$(whoami)/narwhal/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+#zprof

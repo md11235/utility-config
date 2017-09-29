@@ -8,6 +8,7 @@
 	dfb = diff -b
 	dfc = diff --cached
 	log = log --decorate --graph
+	git = !exec git
 [user]
 	name = Madsen
 	email = md11235@gmail.com

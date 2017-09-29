@@ -37,5 +37,7 @@
 	trustctime = false
 	fileMode = false
 	pager = less -x4
+#不对0x80以上的字符进行quote，解决git status/commit时中文文件名乱码
+	quotepath = false
 [push]
 	default = simple

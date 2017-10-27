@@ -44,3 +44,5 @@ nmap <silent> <leader>n :silent :nohlsearch<CR>
 nmap <silent> <leader>s :set nolist!<CR>
 set shortmess=atI
 set ruler
+
+colorscheme desert

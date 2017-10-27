@@ -435,7 +435,7 @@ function mds-git-st-dirs () {
 # export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 # export PATH="/usr/local/bin:/usr/bin:/bin::"
 if [ "$OSTYPE" = "cygwin" ]; then
-   export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32"
+   export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32:$HOME/utility-config/cygwin/bin"
 fi
 
 export PATH="/home/$(whoami)/narwhal/bin:$PATH"

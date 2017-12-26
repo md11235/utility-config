@@ -1,6 +1,6 @@
 #zmodload zsh/zprof 
 ###########################################################        
-if [ "$OSTYPE" = "cygwin" ]; then
+if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
    export ZHANG_HOME=/d/zhang
 fi
 
@@ -186,7 +186,7 @@ alias mv='mv -i'
 # alias du='du -h'
 
 # Misc :)
-# alias less='less -r'                          # raw control characters
+alias less='less -r'                          # raw control characters
 alias whence='type -a'                        # where, of a sort
 alias grep='grep --color'                     # show differences in colour
 alias grep="grep --color=always"
@@ -259,7 +259,7 @@ function e () {
         darwin*)
             /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $* --alternate-editor "/Users/$(whoami)/bin/emacs-osx"
             ;;
-        cygwin)
+        msys|cygwin)
             emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/BTSync/Applications/Windows/emacs/bin/runemacs.exe)"
             #emacsclient --no-wait "$(cygpath -a -w $*)"
             ;;
@@ -434,7 +434,7 @@ function mds-git-st-dirs () {
 # export PATH=$PATH:/usr/local/bin:/usr/local/sbin
 # export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 # export PATH="/usr/local/bin:/usr/bin:/bin::"
-if [ "$OSTYPE" = "cygwin" ]; then
+if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
    export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32"
 fi
 

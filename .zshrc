@@ -379,7 +379,6 @@ zle -N history-incremental-search-forward hist-inc-search-save-direction
 zle -N history-incremental-search-backward hist-inc-search-save-direction
 export MAVEN_OPTS="-Xms1024m -Xmx1024m"
 
-export LC_ALL=en_US.UTF-8
 
 zle-isearch-exit() {
     if [[ $ISEARCHDIR -eq 1 ]]; then
@@ -438,8 +437,10 @@ if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
    export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32:$HOME/utility-config/cygwin/bin"
 fi
 
-export PATH="/home/$(whoami)/narwhal/bin:$PATH"
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# export PATH="/home/$(whoami)/narwhal/bin:$PATH"
+# export PATH="$PATH:$HOME/.local/bin" # Add RVM to PATH for scripting
+export LANGUAGE=en_US
+export LC_ALL=en_US.UTF-8
 
 #zprof
 alias nbstrip_jq="jq --indent 1 \

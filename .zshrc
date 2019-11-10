@@ -194,7 +194,6 @@ alias grep="grep --color=always"
 # Some shortcuts for different directory listings
 alias dir='ls --color=auto --format=vertical'
 alias vdir='ls --color=auto --format=long'
-alias ls="ls --color=always"
 alias ll='ls -l'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #

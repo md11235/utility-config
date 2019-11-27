@@ -436,8 +436,6 @@ if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
    export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32:$HOME/utility-config/cygwin/bin"
 fi
 
-# export PATH="/home/$(whoami)/narwhal/bin:$PATH"
-# export PATH="$PATH:$HOME/.local/bin" # Add RVM to PATH for scripting
 export LANGUAGE=en_US
 export LC_ALL=en_US.UTF-8
 
@@ -448,3 +446,12 @@ alias nbstrip_jq="jq --indent 1 \
     | .metadata = {\"language_info\": {\"name\": \"python\", \"pygments_lexer\": \"ipython3\"}} \
     | .cells[].metadata = {} \
     '"
+export PATH="$PATH:/home/zhang/.local/bin" # Add RVM to PATH for scripting
+
+#zprof
+#
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/zhang/local/cuda-10.0/lib64:/home/zhang/local/cuda-10.0/lib
+#export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:/usr/local/cuda-8.0/lib
+#export LD_LIBRARY_PATH=/home/zhang/local/cuda-9.0/lib64:/home/zhang/local/cuda-9.0/lib
+export LD_LIBRARY_PATH=/home/zhang/local/cuda-9.2/lib64

@@ -69,8 +69,8 @@ function load_most_recent_cygwin_mingw_drives() {
     if [ -f "$HOME/.cygwin_or_mingw_zstyle_drives_list" ]
     then
         # read the file if it is up-to-date
-        last_modified=$(stat -c "%Y" "$HOME/.cygwin_or_mingw_zstyle_drives_list")
-        current=`date +%s`
+        last_modified=$(sh -c "stat -c \"%Y\" \"$HOME/.cygwin_or_mingw_zstyle_drives_list\"")
+        current=$(sh -c "date +%s")
 
         if [ $(($current-$last_modified)) -gt 86400 ]
         then

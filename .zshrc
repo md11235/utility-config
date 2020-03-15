@@ -1,6 +1,6 @@
 # zmodload zsh/zprof 
 ###########################################################        
-if [ "$OSTYPE" = "cygwin" ]; then
+if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
    export ZHANG_HOME=/d/zhang
 fi
 
@@ -224,7 +224,7 @@ alias mv='mv -i'
 # alias du='du -h'
 
 # Misc :)
-# alias less='less -r'                          # raw control characters
+alias less='less -r'                          # raw control characters
 alias whence='type -a'                        # where, of a sort
 alias grep='grep --color'                     # show differences in colour
 alias grep="grep --color=always"
@@ -232,7 +232,6 @@ alias grep="grep --color=always"
 # Some shortcuts for different directory listings
 alias dir='ls --color=auto --format=vertical'
 alias vdir='ls --color=auto --format=long'
-alias ls="ls --color=always"
 alias ll='ls -l'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
@@ -297,7 +296,7 @@ function e () {
         darwin*)
             /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $* --alternate-editor "/Users/$(whoami)/bin/emacs-osx"
             ;;
-        cygwin)
+        msys|cygwin)
             emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/Applications/emacs/bin/runemacs.exe)"
             #emacsclient --no-wait "$(cygpath -a -w $*)"
             ;;
@@ -417,7 +416,6 @@ zle -N history-incremental-search-forward hist-inc-search-save-direction
 zle -N history-incremental-search-backward hist-inc-search-save-direction
 export MAVEN_OPTS="-Xms1024m -Xmx1024m"
 
-export LC_ALL=en_US.UTF-8
 
 zle-isearch-exit() {
     if [[ $ISEARCHDIR -eq 1 ]]; then
@@ -472,10 +470,13 @@ function mds-git-st-dirs () {
 # export PATH=$PATH:/usr/local/bin:/usr/local/sbin
 # export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 # export PATH="/usr/local/bin:/usr/bin:/bin::"
-if [ "$OSTYPE" = "cygwin" ]; then
+
+if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
    export PATH="$PATH:$ZHANG_HOME/Applications/emacs/bin:~/bin:/c/WINDOWS/system32:$HOME/utility-config/cygwin/bin"
 fi
 
+export LANGUAGE=en_US
+export LC_ALL=en_US.UTF-8
 # export PATH="/home/$(whoami)/narwhal/bin:$PATH"
 # export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -485,3 +486,4 @@ __git_files () {
 }
 
 ##zprof
+

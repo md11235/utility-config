@@ -1,4 +1,4 @@
-#zmodload zsh/zprof 
+# zmodload zsh/zprof 
 ###########################################################        
 if [ "$OSTYPE" = "cygwin" ]; then
    export ZHANG_HOME=/d/zhang
@@ -60,8 +60,31 @@ zstyle ':completion:*:kill:*' force-list always
 # cd not select parent dir
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
+function update_and_save_cygwin_mingw_drives() {
+    cygwin_or_mingw_zstyle_drives_list=$(sh -c "df --output=source |sed -e 's/:.*$//g' | tail -n '+2' | tr '\n' ' ' |tr 'A-Z' 'a-z' | sed -e 's/^/ /' -e 's/ $//' -e 's/ / \/:/g' -e 's/^ //'")
+    sh -c  "echo $cygwin_or_mingw_zstyle_drives_list > $HOME/.cygwin_or_mingw_zstyle_drives_list"
+}
+
+function load_most_recent_cygwin_mingw_drives() {
+    if [ -f "$HOME/.cygwin_or_mingw_zstyle_drives_list" ]
+    then
+        # read the file if it is up-to-date
+        last_modified=$(stat -c "%Y" "$HOME/.cygwin_or_mingw_zstyle_drives_list")
+        current=`date +%s`
+
+        if [ $(($current-$last_modified)) -gt 86400 ]
+        then
+            $(update_and_save_cygwin_mingw_drives)
+        fi
+    else
+        $(update_and_save_cygwin_mingw_drives)
+    fi
+    cygwin_or_mingw_zstyle_drives_list=$(< "$HOME/.cygwin_or_mingw_zstyle_drives_list")
+    echo -e $cygwin_or_mingw_zstyle_drives_list
+}
+
 case `uname` in
-    *MINGW*|*CYGWIN*) zstyle ':completion:*' fake-files $(df --output=source |sed -e 's/:.*$//g' |xargs -I{} echo "/:{}" |tr '\n' ' ' | sed -e 's/\/\:Filesystem //g' | sed -e 's/ $//g' | tr '[:upper:]' '[:lower:]')
+    *MINGW*|*CYGWIN*) zstyle ':completion:*' fake-files $(load_most_recent_cygwin_mingw_drives)
 esac
 
 #if [ "$OSTYPE" = "cygwin" ]; then
@@ -81,7 +104,22 @@ zmodload -a colors
 zmodload -a autocomplete
 zmodload zsh/complist
 ## Completions
-autoload -U compinit
+# autoload -U compinit
+# compinit -C
+
+# for macos
+# autoload -Uz compinit
+# if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
+#   compinit
+# else
+#   compinit -C
+# fi
+
+# # from https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
 compinit -C
 
 zmodload zsh/deltochar
@@ -260,7 +298,7 @@ function e () {
             /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $* --alternate-editor "/Users/$(whoami)/bin/emacs-osx"
             ;;
         cygwin)
-            emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/BTSync/Applications/Windows/emacs/bin/runemacs.exe)"
+            emacsclient --no-wait "$(cygpath -a -w $*)" --alternate-editor "$(cygpath -aw $ZHANG_HOME/Applications/emacs/bin/runemacs.exe)"
             #emacsclient --no-wait "$(cygpath -a -w $*)"
             ;;
     esac
@@ -319,9 +357,9 @@ select-word-style bash
 
 #export CDPATH=.:..:~:~/src
 
-precmd () {
-		printf "\033]2;$(pwd) - $(whoami)\033\\";
-}
+# precmd () {
+# 		printf "\033]2;$(pwd) - $(whoami)\033\\";
+# }
 
 # export CFLAGS="-std=c99 -fgnu89-inline -O3"
 # export CXXFLAGS=""
@@ -435,10 +473,15 @@ function mds-git-st-dirs () {
 # export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 # export PATH="/usr/local/bin:/usr/bin:/bin::"
 if [ "$OSTYPE" = "cygwin" ]; then
-   export PATH="$PATH:$ZHANG_HOME/BTSync/Applications/Windows/emacs/bin:~/bin:/c/WINDOWS/system32:$HOME/utility-config/cygwin/bin"
+   export PATH="$PATH:$ZHANG_HOME/Applications/emacs/bin:~/bin:/c/WINDOWS/system32:$HOME/utility-config/cygwin/bin"
 fi
 
-export PATH="/home/$(whoami)/narwhal/bin:$PATH"
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# export PATH="/home/$(whoami)/narwhal/bin:$PATH"
+# export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-#zprof
+# fix git slow completion
+__git_files () { 
+    _wanted files expl 'local files' _files     
+}
+
+##zprof

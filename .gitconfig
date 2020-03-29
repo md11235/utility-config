@@ -10,7 +10,7 @@
 	log = log --decorate --graph
 	git = !exec git
 [user]
-	name = Madsen
+	name = Sam
 	email = md11235@gmail.com
 
 [color]
@@ -53,3 +53,10 @@
 
 [push]
 	default = simple
+
+[alias]
+wdiff = diff --color-words --ignore-all-space
+ldiff = difftool -y -t latex
+
+[difftool.latex]
+cmd = latexdiff "$LOCAL" "$REMOTE"

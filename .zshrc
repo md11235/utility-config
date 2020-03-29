@@ -485,5 +485,7 @@ __git_files () {
     _wanted files expl 'local files' _files     
 }
 
+export PATH=$PATH:/c/Users/zhang/AppData/Roaming/MiKTeX/2.9/scripts/latexdiff
+
 ##zprof
 

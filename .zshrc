@@ -439,12 +439,13 @@ if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
 fi
 
 export PATH="/home/$(whoami)/narwhal/bin:$PATH"
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$HOME/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 #zprof
-alias nbstrip_jq="jq --indent 1 \
-    '(.cells[] | select(has(\"outputs\")) | .outputs) = []  \
-    | (.cells[] | select(has(\"execution_count\")) | .execution_count) = null  \
-    | .metadata = {\"language_info\": {\"name\": \"python\", \"pygments_lexer\": \"ipython3\"}} \
-    | .cells[].metadata = {} \
-    '"
+#
+export PATH=/usr/local/cuda-9.2/bin${PATH:+:${PATH}}
+
+export LD_LIBRARY_PATH=/usr/local/cuda-9.2/lib64:/home/zhang/cuda_env/cuda-9.0/lib64:/usr/local/nccl_2.2.13/lib:/usr/local/lib
+
+source /home/zhang/virtualenv/gy_traffic/bin/activate
+

@@ -475,6 +475,17 @@ if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
    export PATH="$PATH:$ZHANG_HOME/Applications/emacs/bin:~/bin:/c/WINDOWS/system32:$HOME/utility-config/cygwin/bin"
 fi
 
+export PATH="/home/$(whoami)/narwhal/bin:$PATH"
+export PATH="$HOME/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+#zprof
+#
+export PATH=/usr/local/cuda-9.2/bin${PATH:+:${PATH}}
+
+export LD_LIBRARY_PATH=/usr/local/cuda-9.2/lib64:/home/zhang/cuda_env/cuda-9.0/lib64:/usr/local/nccl_2.2.13/lib:/usr/local/lib
+
+# source /home/zhang/virtualenv/gy_traffic/bin/activate
+
 export LANGUAGE=en_US
 export LC_ALL=en_US.UTF-8
 # export PATH="/home/$(whoami)/narwhal/bin:$PATH"
@@ -485,7 +496,7 @@ __git_files () {
     _wanted files expl 'local files' _files     
 }
 
-export PATH=$PATH:/c/Users/zhang/AppData/Roaming/MiKTeX/2.9/scripts/latexdiff
+# export PATH=$PATH:/c/Users/zhang/AppData/Roaming/MiKTeX/2.9/scripts/latexdiff
 
 ##zprof
 

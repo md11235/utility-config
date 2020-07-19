@@ -288,7 +288,7 @@ export EDITOR=vim
 #### functions
 
 #### functions
-function e () {
+function e3 () {
     case $OSTYPE in
         linux*)
             emacsclient --no-wait $* --alternate-editor "emacs"
@@ -313,7 +313,7 @@ function e () {
     #fi
 }
 
-function e2 () {
+function e () {
     local TMP;
     if [ "$1" = "-" ] || [ $# -eq 0 ]; then
         TMP="$(mktemp /tmp/emacsstdinXXX)";

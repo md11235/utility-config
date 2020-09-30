@@ -184,7 +184,7 @@ case $OSTYPE in
         darwin*)
 			alias ls='ls -G -F'
             ;;
-        cygwin)
+        cygwin|msys)
 			alias ls='ls --color=always -F'
             ;;
 esac

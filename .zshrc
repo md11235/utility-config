@@ -184,7 +184,7 @@ case $OSTYPE in
         darwin*)
 			alias ls='ls -G -F'
             ;;
-        cygwin)
+        cygwin|msys)
 			alias ls='ls --color=always -F'
             ;;
 esac
@@ -288,7 +288,7 @@ export EDITOR=vim
 #### functions
 
 #### functions
-function e () {
+function e3 () {
     case $OSTYPE in
         linux*)
             emacsclient --no-wait $* --alternate-editor "emacs"
@@ -313,13 +313,13 @@ function e () {
     #fi
 }
 
-function e2 () {
+function e () {
     local TMP;
-    if [[ ("$1" == "-") || ($# -eq 0) ]]; then
+    if [ "$1" = "-" ] || [ $# -eq 0 ]; then
         TMP="$(mktemp /tmp/emacsstdinXXX)";
 
-        if [ "$OSTYPE" = "cygwin" ]; then
-            TMP="$(cygpath -a -m $TMP)";
+        if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
+            TMP=$(cygpath -a -m $TMP);
         fi
 
         cat >> "$TMP";
@@ -327,8 +327,8 @@ function e2 () {
             emacs --eval "(let ((b (create-file-buffer \"*stdin*\"))) (switch-to-buffer b) (insert-file-contents \"${TMP}\") (raise-frame) (delete-file \"${TMP}\"))" &
         fi;
     else
-        if [ "$OSTYPE" = "cygwin" ]; then
-            emacsclient --alternate-editor "vim" --no-wait "$(cygpath -a -w $*)"
+        if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]; then
+            emacsclient --alternate-editor "vim" --no-wait "$(cygpath -a -m $*)"
         else
             emacsclient --alternate-editor "vim" --no-wait $*
         fi

@@ -41,15 +41,6 @@
 	quotepath = false
     attributesfile = ~/.gitattributes_global
 
-[filter "nbstrip_full"]
-    clean = "jq --indent 1 \
-                '(.cells[] | select(has(\"outputs\")) | .outputs) = []  \
-                | (.cells[] | select(has(\"execution_count\")) | .execution_count) = null  \
-                | .metadata = {\"language_info\": {\"name\": \"python\", \"pygments_lexer\": \"ipython3\"}} \
-                | .cells[].metadata = {} \
-                '"
-    smudge = cat
-    required = true
 
 [push]
 	default = simple
@@ -65,3 +56,6 @@ cmd = latexdiff "$LOCAL" "$REMOTE"
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+# [http]
+# 	proxy = socks5://127.0.0.1:1080

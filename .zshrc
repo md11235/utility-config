@@ -498,5 +498,9 @@ __git_files () {
 
 # export PATH=$PATH:/c/Users/zhang/AppData/Roaming/MiKTeX/2.9/scripts/latexdiff
 
+
+export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x86_64-linux/lib:/usr/local/lib
+
 ##zprof
 
+export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x86_64-linux/lib:/usr/local/lib

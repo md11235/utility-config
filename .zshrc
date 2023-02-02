@@ -83,6 +83,18 @@ function load_most_recent_cygwin_mingw_drives() {
     echo -e $cygwin_or_mingw_zstyle_drives_list
 }
 
+function countdown() {
+    start="$(( $(date '+%s') + $1))"
+    while [ $start -ge $(date +%s) ]; do
+        time="$(( $start - $(date +%s) ))"
+        printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
+        sleep 0.1
+    done
+
+    while true; do echo -n -e '\x7\r'; sleep 1; done
+}
+
+
 case `uname` in
     *MINGW*|*CYGWIN*) zstyle ':completion:*' fake-files $(load_most_recent_cygwin_mingw_drives)
 esac

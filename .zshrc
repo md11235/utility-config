@@ -136,6 +136,10 @@ compinit -C
 
 zmodload zsh/deltochar
 
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
 ## case-insensitive (all),partial-word and then substring completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 #zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'

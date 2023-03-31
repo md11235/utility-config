@@ -520,3 +520,9 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x
 ##zprof
 
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x86_64-linux/lib:/usr/local/lib
+
+TMOUT=5
+
+TRAPALRM() {
+    zle reset-prompt
+}

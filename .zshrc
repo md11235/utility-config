@@ -122,6 +122,10 @@ for dump in ~/.zcompdump(N.mh+24); do
 done
 compinit -C
 
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
 zmodload zsh/deltochar
 
 ## case-insensitive (all),partial-word and then substring completion
@@ -238,6 +242,7 @@ alias l='ls -CF'                              #
 
 alias b="cd .."
 alias ..="cd .."
+alias ...="cd ../.."
 alias ,="cd .."
 alias less2=/usr/bin/less
 alias oie="xargs -n 1 emacsclient --no-wait"
@@ -467,7 +472,7 @@ function mds-git-st-dirs () {
     done
 }
 
-# export PATH=$PATH:/usr/local/bin:/usr/local/sbin
+export PATH=$PATH:/usr/local/bin:/usr/local/sbin
 # export PATH=/usr/local/texlive/2013/bin/i386-linux:$PATH
 # export PATH="/usr/local/bin:/usr/bin:/bin::"
 

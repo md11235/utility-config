@@ -83,6 +83,18 @@ function load_most_recent_cygwin_mingw_drives() {
     echo -e $cygwin_or_mingw_zstyle_drives_list
 }
 
+function countdown() {
+    start="$(( $(date '+%s') + $1))"
+    while [ $start -ge $(date +%s) ]; do
+        time="$(( $start - $(date +%s) ))"
+        printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
+        sleep 0.1
+    done
+
+    while true; do echo -n -e '\x7\r'; sleep 1; done
+}
+
+
 case `uname` in
     *MINGW*|*CYGWIN*) zstyle ':completion:*' fake-files $(load_most_recent_cygwin_mingw_drives)
 esac
@@ -127,6 +139,10 @@ zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
 zmodload zsh/deltochar
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 
 ## case-insensitive (all),partial-word and then substring completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -509,3 +525,9 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x
 ##zprof
 
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x86_64-linux/lib:/usr/local/lib
+
+TMOUT=5
+
+TRAPALRM() {
+    zle reset-prompt
+}

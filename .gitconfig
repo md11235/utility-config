@@ -58,5 +58,7 @@ cmd = latexdiff "$LOCAL" "$REMOTE"
 	process = git-lfs filter-process
 	required = true
 
-# [http]
-# 	proxy = socks5://127.0.0.1:1080
+
+[http]
+    proxy = socks5h://127.0.0.1:10808
+

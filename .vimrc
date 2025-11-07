@@ -45,4 +45,9 @@ nmap <silent> <leader>s :set nolist!<CR>
 set shortmess=atI
 set ruler
 
-colorscheme desert
+colorscheme murphy
+
+" add newline without leaving normal mode
+noremap <silent> <space> :exe "normal i".nr2char(getchar())<CR>
+noremap <silent> <s-space> :exe "normal a".nr2char(getchar())<CR>
+

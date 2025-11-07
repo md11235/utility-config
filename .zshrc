@@ -526,8 +526,12 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x
 
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x86_64-linux/lib:/usr/local/lib
 
-TMOUT=5
+#TMOUT=5
 
-TRAPALRM() {
-    zle reset-prompt
-}
+#TRAPALRM() {
+#    zle reset-prompt
+#}
+source API_KEYS
+
+# export http_proxy=http://127.0.0.1:18080
+# export https_proxy=http://127.0.0.1:18080

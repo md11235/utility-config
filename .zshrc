@@ -531,7 +531,9 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/targets/x
 #TRAPALRM() {
 #    zle reset-prompt
 #}
-source API_KEYS
+if test -f API_KEYS; then
+    source API_KEYS
+fi
 
 # export http_proxy=http://127.0.0.1:18080
 # export https_proxy=http://127.0.0.1:18080
